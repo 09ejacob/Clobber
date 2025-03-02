@@ -1,2 +1,0 @@
-# Clobber
-Multiplayer unity game
