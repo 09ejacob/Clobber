@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour {
@@ -21,6 +22,8 @@ public class PlayerMovement : MonoBehaviour {
     private CharacterController characterController;
 
     private bool canMove = true;
+
+    PhotonView view;
 
     void Start() {
         characterController = GetComponent<CharacterController>();
