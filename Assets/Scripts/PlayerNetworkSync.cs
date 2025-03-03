@@ -17,7 +17,7 @@ public class PlayerNetworkSync : MonoBehaviour, IPunObservable {
             if (distance > 3f) {
                 transform.position = syncedPosition;
             } else {
-                transform.position = Vector3.Lerp(transform.position, syncedPosition, Time.deltaTime * 10f);
+                transform.position = Vector3.Lerp(transform.position, syncedPosition, Time.deltaTime * 20f);
             }
             
             // Interpolate player's Y rotation (yaw)
