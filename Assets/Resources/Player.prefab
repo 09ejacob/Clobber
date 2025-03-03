@@ -297,12 +297,12 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 1
+    InterpolateOption: 3
     InterpolateMoveTowardsSpeed: 10
     InterpolateLerpSpeed: 20
-    ExtrapolateOption: 3
+    ExtrapolateOption: 1
     ExtrapolateSpeed: 10
-    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateIncludingRoundTripTime: 0
     ExtrapolateNumberOfStoredPositions: 1
   m_RotationModel:
     SynchronizeEnabled: 1
