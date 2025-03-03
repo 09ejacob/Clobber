@@ -30,12 +30,10 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
         view = GetComponent<PhotonView>();
 
         if (!view.IsMine) {
-            // Disable the local camera for remote players
             if (cameraPivot != null) {
                 cameraPivot.gameObject.SetActive(false);
             }
         } else {
-            // Lock cursor for local player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -43,23 +41,18 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
     void Update() {
         if (view.IsMine) {
-            // Horizontal rotation rotates the player object (yaw)
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
-            // Vertical rotation rotates the camera pivot (pitch)
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             if (cameraPivot != null) {
                 cameraPivot.localRotation = Quaternion.Euler(rotationX, 0, 0);
             }
-            
-            // Update the spine rotation to follow the camera pivot.
-            // You can adjust this logic if you need an offset or a different behavior.
+
             if (spine != null && cameraPivot != null) {
                 spine.rotation = cameraPivot.rotation;
             }
             
-            // Movement, jump, crouch, etc.
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 right = transform.TransformDirection(Vector3.right);
             
@@ -87,20 +80,16 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
 
             characterController.Move(moveDirection * Time.deltaTime);
         } else {
-            // For remote players, smoothly update the spine rotation with the synced value.
             if (spine != null) {
                 spine.rotation = Quaternion.Lerp(spine.rotation, syncedSpineRotation, Time.deltaTime * 10f);
             }
         }
     }
 
-    // This method is called by Photon to synchronize data.
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            // Send the spine rotation from the local player
             stream.SendNext(spine.rotation);
         } else {
-            // Receive and store the spine rotation for remote players
             syncedSpineRotation = (Quaternion)stream.ReceiveNext();
         }
     }
