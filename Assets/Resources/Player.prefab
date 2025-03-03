@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spine: {fileID: 270074082756505252}
+  cameraPivot: {fileID: 270074082756505252}
 --- !u!114 &999904637621912166
 MonoBehaviour:
   m_ObjectHideFlags: 0

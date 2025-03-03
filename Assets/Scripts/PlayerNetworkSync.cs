@@ -2,41 +2,47 @@ using UnityEngine;
 using Photon.Pun;
 
 public class PlayerNetworkSync : MonoBehaviour, IPunObservable {
-    public Transform spine; // Assign this in the Inspector
+    public Transform spine;         // Assign this in the Inspector
+    public Transform cameraPivot;   // Needed to get the local pitch (X rotation)
 
     private Vector3 syncedPosition;
-    private Quaternion syncedSpineRotation;
+    private float syncedPlayerYRotation;
+    private float syncedSpinePitch; // The cameraPivot's local X (pitch)
 
     void Update() {
         PhotonView view = GetComponent<PhotonView>();
         if (!view.IsMine) {
-            // If the distance is too big, snap to the target position
+            // Smoothly interpolate position
             float distance = Vector3.Distance(transform.position, syncedPosition);
             if (distance > 3f) {
                 transform.position = syncedPosition;
             } else {
-                // Otherwise, smoothly interpolate the position
                 transform.position = Vector3.Lerp(transform.position, syncedPosition, Time.deltaTime * 10f);
             }
             
-            // Smoothly interpolate the spine rotation
+            // Interpolate player's Y rotation (yaw)
+            float newY = Mathf.LerpAngle(transform.eulerAngles.y, syncedPlayerYRotation, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Euler(0, newY, 0);
+            
+            // Interpolate the spine's local X rotation (pitch)
             if (spine != null) {
-                spine.rotation = Quaternion.Lerp(spine.rotation, syncedSpineRotation, Time.deltaTime * 10f);
+                Quaternion targetLocal = Quaternion.Euler(syncedSpinePitch, 0, 0);
+                spine.localRotation = Quaternion.Lerp(spine.localRotation, targetLocal, Time.deltaTime * 10f);
             }
         }
     }
 
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.IsWriting) {
-            // Send the local player's position and spine rotation
+            // Local player sends:
             stream.SendNext(transform.position);
-            if (spine != null)
-                stream.SendNext(spine.rotation);
+            stream.SendNext(transform.eulerAngles.y);
+            stream.SendNext(cameraPivot != null ? cameraPivot.localEulerAngles.x : 0f);
         } else {
-            // Receive and store the networked position and spine rotation
+            // Remote players receive:
             syncedPosition = (Vector3)stream.ReceiveNext();
-            syncedSpineRotation = (Quaternion)stream.ReceiveNext();
+            syncedPlayerYRotation = (float)stream.ReceiveNext();
+            syncedSpinePitch = (float)stream.ReceiveNext();
         }
     }
 }
