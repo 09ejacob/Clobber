@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks {
     void Awake() {
-        PhotonNetwork.SendRate = 30;           // packets per second
-        PhotonNetwork.SerializationRate = 30;  // serialization calls per second
+        PhotonNetwork.SendRate = 60;           // packets per second
+        PhotonNetwork.SerializationRate = 60;  // serialization calls per second
     }
     
     void Start() {

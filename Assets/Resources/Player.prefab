@@ -159,16 +159,16 @@ PrefabInstance:
       addedObject: {fileID: 5469956595216901394}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4782460312618932760}
+      addedObject: {fileID: 6051862910861940098}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4676663665875850295}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 999904637621912166}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7971816573364967725}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 81bb9eea30387e442899949a80011e55, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2845892937416898598}
   m_SourcePrefab: {fileID: 100100000, guid: 81bb9eea30387e442899949a80011e55, type: 3}
 --- !u!4 &270074082756505252 stripped
 Transform:
@@ -233,7 +233,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.52, z: 0}
---- !u!114 &4782460312618932760
+--- !u!114 &6051862910861940098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,19 +242,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 6158769509339868178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 342a45437667a4646abc45b3c1bf81fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 404873d85d2df2e4cb0a223d6c41e4a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 6
   runSpeed: 12
-  jumpPower: 4
+  jumpPower: 7
   gravity: 9.81
+  crouchSpeed: 3
   lookSpeed: 2
   lookXLimit: 60
-  defaultHeight: 1
+  defaultHeight: 0.2
   crouchHeight: 0
-  crouchSpeed: 3
   cameraPivot: {fileID: 270074082756505252}
+  spine: {fileID: 270074082756505252}
+--- !u!114 &4676663665875850295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6158769509339868178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39cf8adf4b766fc4e878955977ab4136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   spine: {fileID: 270074082756505252}
 --- !u!114 &999904637621912166
 MonoBehaviour:
@@ -275,9 +288,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 4782460312618932760}
+  - {fileID: 4676663665875850295}
   - {fileID: 7971816573364967725}
-  - {fileID: 2845892937416898598}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -297,36 +309,3 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters: []
   m_SynchronizeLayers: []
---- !u!114 &2845892937416898598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6158769509339868178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 10
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 2
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 10
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
