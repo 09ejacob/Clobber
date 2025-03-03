@@ -4,16 +4,16 @@ using Photon.Pun;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
     [Header("Movement Settings")]
-    public float walkSpeed = 6f;
-    public float runSpeed = 12f;
-    public float jumpPower = 7f;
+    public float walkSpeed = 3f;
+    public float runSpeed = 5f;
+    public float jumpPower = 4f;
     public float gravity = 9.81f;
-    public float crouchSpeed = 3f;
+    public float crouchSpeed = 1.5f;
 
     [Header("Rotation Settings")]
     public float lookSpeed = 2f;
     public float lookXLimit = 60f;
-    public float defaultHeight = 0.2f;
+    public float defaultHeight = 1f;
     public float crouchHeight = 0f;
 
     [Header("References")]
