@@ -13,27 +13,26 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
     public float crouchHeight = 0f;
     public float crouchSpeed = 3f;
     
-    public Transform cameraPivot;   // This is the parent for your camera (only active for local player)
-    public Transform spine;         // Reference to the spine bone you want to sync
+    public Transform cameraPivot;  // For the local camera
+    public Transform spine;        // Spine bone to sync
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0f;
     private CharacterController characterController;
     
-    PhotonView view;
-    
-    // Used to store the spine rotation received from the network
+    private PhotonView view;
     private Quaternion syncedSpineRotation;
 
     void Start() {
         characterController = GetComponent<CharacterController>();
         view = GetComponent<PhotonView>();
 
-        if (!view.IsMine) {
-            if (cameraPivot != null) {
-                cameraPivot.gameObject.SetActive(false);
-            }
-        } else {
+        // Disable camera for remote players
+        if (!view.IsMine && cameraPivot != null) {
+            cameraPivot.gameObject.SetActive(false);
+        } 
+        else {
+            // Local player setup
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -54,11 +53,12 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
             }
             
             Vector3 forward = transform.TransformDirection(Vector3.forward);
-            Vector3 right = transform.TransformDirection(Vector3.right);
-            
+            Vector3 right   = transform.TransformDirection(Vector3.right);
+
             bool isRunning = Input.GetKey(KeyCode.LeftShift);
             float curSpeedX = (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical");
             float curSpeedY = (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal");
+
             float movementDirectionY = moveDirection.y;
             moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
@@ -79,7 +79,8 @@ public class PlayerMovement : MonoBehaviour, IPunObservable {
             }
 
             characterController.Move(moveDirection * Time.deltaTime);
-        } else {
+        }
+        else {
             if (spine != null) {
                 spine.rotation = Quaternion.Lerp(spine.rotation, syncedSpineRotation, Time.deltaTime * 10f);
             }
